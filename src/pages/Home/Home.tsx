@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Title from '../../components/Title/Title'
 import Header from '../../components/Header/Header'
 import Doctor from '../Doctor/Doctor'
+import Patient from '../Patient/Patient'
 
 export default class Home extends Component {
   render() {
@@ -12,6 +13,7 @@ export default class Home extends Component {
             <section className=''>
             <Title/>
             <Doctor/>
+            <Patient/>
             </section>
            
       </div>
