@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Home from './pages/Home';
 import Header from './components/Header/Header';
+import Home from './pages/Home/Home';
 export default class App extends Component  {
   componentDidMount(): void {
       //console.log('run')
@@ -18,7 +18,7 @@ export default class App extends Component  {
           </p>
         
       </div> */}
-            <Header/>
+            <Home/>
             {/* <Content/> */}
       {/* <Home/>
       <Contact/>

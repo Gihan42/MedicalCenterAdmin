@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
+import 'bootstrap/dist/css/bootstrap.css';
+
 export default class Header extends Component {
   render() {
     const navStyle="font-bold border-b-2"
@@ -15,9 +17,10 @@ export default class Header extends Component {
                     <div className='flex w-full text-xl justify-center gap-12 '>
                       
                         <NavLink to={"/home"} className= 'cursor-pointer text-slate-300 pr-0'>Home</NavLink>
-                        <NavLink to={"/about"} className='text-slate-300 '>About</NavLink>
-                        <NavLink to={"/contact"} className='text-slate-300 '>Contact</NavLink>
-                        <NavLink to={"/profile"} className='text-slate-300 '>Profile</NavLink>
+                        <NavLink to={"/about"} className='text-slate-300 '>Doctor</NavLink>
+                        <NavLink to={"/contact"} className='text-slate-300 '>Patient</NavLink>
+                        <NavLink to={"/profile"} className='text-slate-300 '>Channeling</NavLink>
+                        <button type="button" className="btn btn-outline-light text-slate-300 ">Loging</button>
 
 
                     </div>
