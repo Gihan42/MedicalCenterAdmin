@@ -3,10 +3,47 @@ import TextField from '@mui/material/TextField'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';import { relative } from 'path';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
-export default class Patient extends Component {
+import axios from '../../axios';
+
+
+type PatientDetails = {
+  email:string;
+  userName:string;
+  password:string;
+};
+type PatientProps = {};
+type PatientState = {
+  patientList: PatientDetails[];
+  email:string;
+  userName:string;
+  password:string;
+};
+export default class Patient extends Component  <PatientProps, PatientState>{
+  constructor(props: PatientProps) {
+    super(props);
+    this.state = {
+      patientList: [],
+      email:"",
+      userName:"",
+      password:"",
+      
+    };
+  };
+  componentDidMount(): void {
+    this.getAllPatient();
+  };
+  getAllPatient =()=>{
+    axios.get ("http://localhost:5000/api/v1/patient").then((res)=>{
+       console.log(res.data.responseData);
+       this.setState((prevState)=>({
+         ...prevState,
+         patientList:res.data.responseData,
+       }))
+    })
+ };
   render() {
     return (
-      <div className='mt-10'>
+      <div className='mt-10 '>
 
 <section>
             <div className="cursor-pointer w-full pt-2 border-2 border-white pb-2 pl-6 bg-sky-900 text-white rounded flex justify-between items-center ">
@@ -166,28 +203,32 @@ export default class Patient extends Component {
                       </tr>
                      </thead>
                       <tbody>
-                      <tr>
-                       <td>A001</td>
-                       <td>Dr P Darshana</td>
-                       <td>Doctor</td>
+                      {this.state.patientList.map((patient) => (
+                        <tr>
+                       <td>{patient.email}</td>
+                       <td>{patient.userName}</td>
+                       <td>. . . . . . .</td>
                        <td><CloseIcon/></td>
-                     </tr>
+                        </tr>
+                     ))};
 
                      </tbody>
                     </table>
                 </div> 
             <div className="bg-transparent ">
-            <div className="bg-white border-2 border-gray-700 p-4 rounded-3xl shadow-2xl shadow-black">
+            <div className="bg-slate-200 border-2 border-gray-700 p-4 rounded-3xl shadow-2xl shadow-black">
                <div className='flex space-x-5'>
                <form action="" className='text-2xl '>
                 <div className='flex justify-center space-x-10 mb-5'>
                 <TextField
-                      label="Doctor Id"
-                      type="text"
+                      type="email"
                       variant="outlined"
-                      name="DId"
+                      id="email"
+                      label="Email Address"
+                      name="email"
                       placeholder="Enter Doctor Id"
                       required
+                      
                       
                     />
             <button type="button" className="btn btn-success pl-4 pr-4">Search Patient<PersonSearchIcon/></button>
@@ -205,15 +246,14 @@ export default class Patient extends Component {
                           autoComplete="email"
                           autoFocus
                           type="text"
+                          variant="standard"
+
                         //   value={this.state.email}
                         //   onChange={this.handleInput}
                         />
                   </div>
                   <div className='text-xl'>User Name
                   <TextField
-                          style={{
-                            color: "red",
-                          }}
                           margin="normal"
                           required
                           fullWidth
@@ -221,6 +261,8 @@ export default class Patient extends Component {
                           label="User Name"
                           name="userName"
                           autoFocus
+                          variant="standard"
+
                         //   value={this.state.userName}
                         //   onChange={this.handleInput}
                         />
