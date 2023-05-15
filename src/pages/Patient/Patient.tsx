@@ -73,9 +73,18 @@ export default class Patient extends Component  <PatientProps, PatientState>{
     axios.delete(`patient/${this.state.email}`).then((res)=>{
       alert(res.data.message);
       this.getAllPatient()
+      this.clearData();
     }).catch((error)=>{
       alert('not deleted')
     });
+  };
+  clearData = () =>{
+    this.setState((prevState)=>({
+      ...prevState,
+      email:"",
+      userName:"",
+      password:"",
+    }));
   }
   render() {
     return (

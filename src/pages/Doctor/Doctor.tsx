@@ -85,6 +85,7 @@ export default class Doctor extends Component <DoctorProps, DoctorState>{
       //     PatientList:[...prevState.PatientList, res.data.responseData]
       // }));
       this.getAllDoctors();
+      this.clearData();
       console.log(res);
     })
     .catch((error) => {});
@@ -115,7 +116,8 @@ updateDoctor = () =>{
     }
     axios.put(`doctor/${this.state.DId}`,doctor).then((res)=>{
       alert(res.data.message);
-      this.getAllDoctors()
+      this.getAllDoctors();
+      this.clearData();
     }).catch((error)=>{
       alert('something went wrong')
     })
@@ -123,7 +125,8 @@ updateDoctor = () =>{
 deleteDoctor = () =>{
   axios.delete(`doctor/${this.state.DId}`).then((res)=>{
     alert(res.data.message);
-    this.getAllDoctors()
+    this.getAllDoctors();
+    this.clearData();
   }).catch((error)=>{
     alert('not deleted')
   });
@@ -131,10 +134,23 @@ deleteDoctor = () =>{
 deleteDoctorTable = () =>{
   axios.delete(`doctor/${this.state.DId}`).then((res)=>{
     alert(res.data.message);
-    this.getAllDoctors()
+    this.getAllDoctors();
+    this.clearData();
   }).catch((error)=>{
     alert('not deleted')
   });
+};
+clearData = () =>{
+  this.setState((prevState)=>({
+    ...prevState,
+      DId: "",
+      DName: "",
+      position: "",
+      time: "",
+      contact: "",
+      DCharge: 0,
+      wardNo: 0,
+  }));
 }
   render() {
     return (
