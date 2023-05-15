@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from '../../axios';
 import { Key } from '@mui/icons-material';
+import { error } from 'console';
 
 type DoctorDetails = {
   DId: string;
@@ -102,8 +103,39 @@ searchPatient=()=>{
         wardNo: wardNo,
       })); 
   });
+};
+updateDoctor = () =>{
+    let doctor ={
+      DName: this.state.DName,
+      position: this.state.position,
+      time: this.state.time,
+      contact: this.state.contact,
+      DCharge: this.state.DCharge,
+      wardNo: this.state.wardNo,
+    }
+    axios.put(`doctor/${this.state.DId}`,doctor).then((res)=>{
+      alert(res.data.message);
+      this.getAllDoctors()
+    }).catch((error)=>{
+      alert('something went wrong')
+    })
+};
+deleteDoctor = () =>{
+  axios.delete(`doctor/${this.state.DId}`).then((res)=>{
+    alert(res.data.message);
+    this.getAllDoctors()
+  }).catch((error)=>{
+    alert('not deleted')
+  });
+};
+deleteDoctorTable = () =>{
+  axios.delete(`doctor/${this.state.DId}`).then((res)=>{
+    alert(res.data.message);
+    this.getAllDoctors()
+  }).catch((error)=>{
+    alert('not deleted')
+  });
 }
-
   render() {
     return (
       <div>
@@ -128,7 +160,7 @@ searchPatient=()=>{
                       
                       
                     />
-            <button type="submit" onClick={this.searchPatient} className="btn btn-success pl-4 pr-4">Search Doctor<PersonSearchIcon/></button>
+            <button type="button" onClick={this.searchPatient} className="btn btn-success pl-4 pr-4">Search Doctor<PersonSearchIcon/></button>
             
                 </div>
                 <div className='flex justify-start space-x-20 m-1'>
@@ -248,8 +280,8 @@ searchPatient=()=>{
                   variant="standard"
                 />
                   <button type="submit" className="btn btn-primary">Save</button>
-                  <button type="button" className="btn btn-danger">Delete</button>
-                  <button type="button" className="btn btn-warning">Update</button>
+                  <button type="button" onClick={this.deleteDoctor} className="btn btn-danger">Delete</button>
+                  <button type="button" onClick={this.updateDoctor} className="btn btn-warning">Update</button>
                   </div>  
                   
                 </div>
@@ -281,7 +313,7 @@ searchPatient=()=>{
                        <td>{doctor.contact}</td>
                        <td>{doctor.DCharge}</td>
                        <td>{doctor.wardNo}</td>
-                       <td><CloseIcon/></td>
+                       <td onClick={this.deleteDoctorTable}><CloseIcon/></td>
                         </tr>
                      ))};
 

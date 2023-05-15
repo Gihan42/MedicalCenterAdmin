@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { ChangeEvent, Component } from 'react'
 import TextField from '@mui/material/TextField'
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';import { relative } from 'path';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -41,6 +41,42 @@ export default class Patient extends Component  <PatientProps, PatientState>{
        }))
     })
  };
+ searcPatient = () =>{
+  axios.get(`patient/${this.state.email}`).then((res)=>{
+    const { email,userName,password} = res.data.responseData;
+      this.setState((prevState )=>({
+        ...prevState,
+        email:email,
+       userName:userName,
+       password:password,
+      })); 
+  });
+ };
+ handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  const { email,userName,password } = this.state;
+  let newPatient = {
+        email:email,
+       userName:userName,
+       password:password,
+  };}
+  handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type } = event.target;
+    const inputValue = type == "number" ? parseInt(value) : value;
+
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  deletePatient = () =>{
+    axios.delete(`patient/${this.state.email}`).then((res)=>{
+      alert(res.data.message);
+      this.getAllPatient()
+    }).catch((error)=>{
+      alert('not deleted')
+    });
+  }
   render() {
     return (
       <div className='mt-10 '>
@@ -77,20 +113,23 @@ export default class Patient extends Component  <PatientProps, PatientState>{
             <div className="bg-transparent ">
             <div className="bg-slate-200 border-2 border-gray-700 p-4 rounded-3xl shadow-2xl shadow-black">
                <div className='flex space-x-5'>
-               <form action="" className='text-2xl '>
+               <form onSubmit={this.handleSubmit} className='text-2xl '>
                 <div className='flex justify-center space-x-10 mb-5'>
                 <TextField
-                      type="email"
-                      variant="outlined"
+                      margin="normal"
+                      required
                       id="email"
                       label="Email Address"
                       name="email"
-                      placeholder="Enter Doctor Id"
-                      required
-                      
-                      
+                      autoComplete="email"
+                      autoFocus
+                      type="text"
+                      variant="outlined"
+                      value={this.state.email}
+                      onChange={this.handleInput}
+                      onClick={this.searcPatient}
                     />
-            <button type="button" className="btn btn-success pl-4 pr-4">Search Patient<PersonSearchIcon/></button>
+            <button type="button" onClick={this.searcPatient} className="btn btn-success pl-4 pr-4">Search Patient<PersonSearchIcon/></button>
             
                 </div>
                 <div className='flex justify-start space-x-20 m-1'>
@@ -107,8 +146,8 @@ export default class Patient extends Component  <PatientProps, PatientState>{
                           type="text"
                           variant="standard"
 
-                        //   value={this.state.email}
-                        //   onChange={this.handleInput}
+                          value={this.state.email}
+                          onChange={this.handleInput}
                         />
                   </div>
                   <div className='text-xl'>User Name
@@ -122,12 +161,12 @@ export default class Patient extends Component  <PatientProps, PatientState>{
                           autoFocus
                           variant="standard"
 
-                        //   value={this.state.userName}
-                        //   onChange={this.handleInput}
+                          value={this.state.userName}
+                          onChange={this.handleInput}
                         />
                   </div>           
                 </div>
-                <button type="button" className="btn btn-danger">Delete Patient<CloseIcon/></button>
+                <button type="button" onClick={this.deletePatient} className="btn btn-danger">Delete Patient<CloseIcon/></button>
               </form>
                </div>
             </div>
