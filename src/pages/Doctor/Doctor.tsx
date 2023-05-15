@@ -87,8 +87,23 @@ export default class Doctor extends Component <DoctorProps, DoctorState>{
       console.log(res);
     })
     .catch((error) => {});
-    
-};
+   };
+searchPatient=()=>{
+  axios.get(`doctor/${this.state.DId}`).then((res)=>{
+    const { DId, DName, position, time, contact, DCharge, wardNo } = res.data.responseData;
+      this.setState((prevState )=>({
+        ...prevState,
+        DId: DId,
+        DName: DName,
+        position: position,
+        time: time,
+        contact: contact,
+        DCharge: DCharge,
+        wardNo: wardNo,
+      })); 
+  });
+}
+
   render() {
     return (
       <div>
@@ -106,11 +121,14 @@ export default class Doctor extends Component <DoctorProps, DoctorState>{
                       type="text"
                       variant="outlined"
                       name="DId"
+                      value={this.state.DId}
+                      onChange={this.handleInput}
                       placeholder="Enter Doctor Id"
+                      id="DId"
                       
                       
                     />
-            <button type="button" className="btn btn-success pl-4 pr-4">Search Doctor<PersonSearchIcon/></button>
+            <button type="submit" onClick={this.searchPatient} className="btn btn-success pl-4 pr-4">Search Doctor<PersonSearchIcon/></button>
             
                 </div>
                 <div className='flex justify-start space-x-20 m-1'>
