@@ -138,7 +138,7 @@ export default class Patient extends Component  <PatientProps, PatientState>{
                       onChange={this.handleInput}
                       onClick={this.searcPatient}
                     />
-            <button type="button" onClick={this.searcPatient} className="btn btn-success pl-4 pr-4">Search Patient<PersonSearchIcon/></button>
+            <button type="button" onClick={this.searcPatient} className="btn btn-success pb-2 h-11 mt-4 pl-4 pr-4">Search Patient<PersonSearchIcon/></button>
             
                 </div>
                 <div className='flex justify-start space-x-20 m-1'>
