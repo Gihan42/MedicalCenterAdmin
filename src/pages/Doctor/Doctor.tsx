@@ -91,7 +91,7 @@ export default class Doctor extends Component <DoctorProps, DoctorState>{
     .catch((error) => {});
    };
 searchPatient=()=>{
-  axios.get(`doctor/${this.state.DId}`).then((res)=>{
+  axios.get(`doctor/searchById/${this.state.DId}`).then((res)=>{
     const { DId, DName, position, time, contact, DCharge, wardNo } = res.data.responseData;
       this.setState((prevState )=>({
         ...prevState,
