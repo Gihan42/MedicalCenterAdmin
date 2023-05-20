@@ -60,6 +60,7 @@ export default class Patient extends Component  <PatientProps, PatientState>{
        userName:userName,
        password:password,
   };}
+
   handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = event.target;
     const inputValue = type == "number" ? parseInt(value) : value;
@@ -69,6 +70,7 @@ export default class Patient extends Component  <PatientProps, PatientState>{
       [name]: value,
     }));
   };
+
   deletePatient = () =>{
     axios.delete(`patient/${this.state.email}`).then((res)=>{
       alert(res.data.message);
@@ -78,6 +80,7 @@ export default class Patient extends Component  <PatientProps, PatientState>{
       alert('not deleted')
     });
   };
+  
   clearData = () =>{
     this.setState((prevState)=>({
       ...prevState,
